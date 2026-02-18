@@ -1,0 +1,47 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.openStep('C:/Users/mpoli/Desktop/soda-can-001 v1.step', scaleFromFile=OFF)
+#* The file cannot be read. It may be corrupt or not a valid 
+#* STEP file.
+mdb.openStep('C:/Users/mpoli/Desktop/Soda can 2 v1.step', scaleFromFile=OFF)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='Soda can 2 v1-1', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=2, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='Soda can 2 v1-2', 
+    type=DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Soda can 2 v1-1'].setValues(space=THREE_D, type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Soda can 2 v1-1'].checkGeometry()
+mdb.models['Model-1'].parts['Soda can 2 v1-1'].Lock()
+del mdb.models['Model-1'].parts['Soda can 2 v1-1']
+del mdb.models['Model-1'].parts['Soda can 2 v1-2']
+mdb.openStep('C:/Users/mpoli/Desktop/Soda can 2 v1.step', scaleFromFile=OFF)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='SodaCan-1', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=2, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='SodaCan-2', type=
+    DEFORMABLE_BODY)
+del mdb.models['Model-1'].parts['SodaCan-2']
+del mdb.models['Model-1'].parts['SodaCan-1']
+mdb.openIges('C:/Users/mpoli/Desktop/Soda can 2.iges', msbo=True, 
+    scaleFromFile=OFF, trimCurve=DEFAULT)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, convertToAnalytical=1
+    , dimensionality=THREE_D, geometryFile=mdb.acis, name='Soda can 2', 
+    stitchEdges=1, stitchTolerance=1.0, type=DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Soda can 2'].RemoveCells(cellList=
+    mdb.models['Model-1'].parts['Soda can 2'].cells.getSequenceFromMask(mask=(
+    '[#3 ]', ), ))
+# Save by mpoli on 2024_03_20-13.33.14; build 2023 2022_09_28-20.11.55 183150

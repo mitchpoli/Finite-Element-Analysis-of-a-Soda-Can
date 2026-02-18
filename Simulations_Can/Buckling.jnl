@@ -1,0 +1,175 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.openStep('C:/Users/mpoli/Desktop/Half Soda can.step', scaleFromFile=OFF)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='Half Soda can-1', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=2, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='Half Soda can-2', 
+    type=DEFORMABLE_BODY)
+del mdb.models['Model-1'].parts['Half Soda can-2']
+mdb.models['Model-1'].Material(name='Alu lati')
+mdb.models['Model-1'].materials['Alu lati'].Elastic(table=((69000.0, 0.33), ))
+mdb.models['Model-1'].Material(name='Alu sopra/sotto')
+mdb.models['Model-1'].materials['Alu sopra/sotto'].Elastic(table=((69600.0, 
+    0.34), ))
+mdb.models['Model-1'].parts['Half Soda can-1'].RemoveCells(cellList=
+    mdb.models['Model-1'].parts['Half Soda can-1'].cells.getSequenceFromMask(
+    mask=('[#1 ]', ), ))
+mdb.models['Model-1'].HomogeneousShellSection(idealization=NO_IDEALIZATION, 
+    integrationRule=SIMPSON, material='Alu lati', name='lati', 
+    nodalThicknessField='', numIntPts=5, poissonDefinition=DEFAULT, 
+    preIntegrate=OFF, temperature=GRADIENT, thickness=0.22, thicknessField='', 
+    thicknessModulus=None, thicknessType=UNIFORM, useDensity=OFF)
+mdb.models['Model-1'].HomogeneousShellSection(idealization=NO_IDEALIZATION, 
+    integrationRule=SIMPSON, material='Alu sopra/sotto', name='sopra/sotto', 
+    nodalThicknessField='', numIntPts=5, poissonDefinition=DEFAULT, 
+    preIntegrate=OFF, temperature=GRADIENT, thickness=0.22, thicknessField='', 
+    thicknessModulus=None, thicknessType=UNIFORM, useDensity=OFF)
+mdb.models['Model-1'].parts['Half Soda can-1'].Set(faces=
+    mdb.models['Model-1'].parts['Half Soda can-1'].faces.getSequenceFromMask((
+    '[#ffffffff:2 #3fff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['Half Soda can-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Half Soda can-1'].sets['Set-1'], sectionName=
+    'sopra/sotto', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['Half Soda can-1'].Set(faces=
+    mdb.models['Model-1'].parts['Half Soda can-1'].faces.getSequenceFromMask((
+    '[#3000 #1800 #1c00 ]', ), ), name='Set-2')
+mdb.models['Model-1'].parts['Half Soda can-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Half Soda can-1'].sets['Set-2'], sectionName=
+    'lati', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'Half Soda can-1-1', part=mdb.models['Model-1'].parts['Half Soda can-1'])
+mdb.models['Model-1'].BuckleStep(maxIterations=300, name='Step-1', numEigen=6, 
+    previous='Initial', vectors=8)
+mdb.models['Model-1'].parts['Half Soda can-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['Half Soda can-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Half Soda can-1-1'].faces.getSequenceFromMask(
+    ('[#0 #80 ]', ), ), name='Set-1')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, buckleCase=
+    PERTURBATION_AND_BUCKLING, createStepName='Step-1', distributionType=
+    UNIFORM, fieldName='', fixed=OFF, localCsys=None, name='BC-1', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-1'], u1=0.0, u2=0.0, u3=0.0, 
+    ur1=UNSET, ur2=UNSET, ur3=UNSET)
+del mdb.models['Model-1'].boundaryConditions['BC-1']
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Half Soda can-1-1'].edges.getSequenceFromMask(
+    ('[#12000000 #112 #0 #80000440 #10000e ]', ), ), faces=
+    mdb.models['Model-1'].rootAssembly.instances['Half Soda can-1-1'].faces.getSequenceFromMask(
+    ('[#0 #40 ]', ), ), name='Set-2')
+mdb.models['Model-1'].XsymmBC(buckleCase=PERTURBATION_AND_BUCKLING, 
+    createStepName='Step-1', localCsys=None, name='BC-1', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-2'])
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Half Soda can-1-1'].edges.getSequenceFromMask(
+    ('[#0:4 #600000 ]', ), ), name='Set-3')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, buckleCase=
+    PERTURBATION_AND_BUCKLING, createStepName='Step-1', distributionType=
+    UNIFORM, fieldName='', fixed=OFF, localCsys=None, name='BC-2', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-3'], u1=0.0, u2=0.0, u3=0.0, 
+    ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].boundaryConditions['BC-2'].setValues(buckleCase=
+    PERTURBATION_AND_BUCKLING, ur1=0.0, ur2=0.0, ur3=0.0)
+mdb.models['Model-1'].rootAssembly.ReferencePoint(point=
+    mdb.models['Model-1'].rootAssembly.instances['Half Soda can-1-1'].InterestingPoint(
+    mdb.models['Model-1'].rootAssembly.instances['Half Soda can-1-1'].edges[156], 
+    CENTER))
+mdb.models['Model-1'].rootAssembly.Set(name='Force', nodes=
+    mdb.models['Model-1'].rootAssembly.instances['Half Soda can-1-1'].nodes.getSequenceFromMask(
+    mask=('[#0:6 #400 #2 #80000000 #0:58 #fffc0000 #fc00003f', ' #3fff ]', ), 
+    ))
+mdb.models['Model-1'].RigidBody(name='Constraint-1', pinRegion=
+    mdb.models['Model-1'].rootAssembly.sets['Force'], refPointRegion=Region(
+    referencePoints=(mdb.models['Model-1'].rootAssembly.referencePoints[7], )))
+mdb.models['Model-1'].rootAssembly.Set(name='Set-6', referencePoints=(
+    mdb.models['Model-1'].rootAssembly.referencePoints[7], ))
+mdb.models['Model-1'].ConcentratedForce(cf2=1.0, createStepName='Step-1', 
+    distributionType=UNIFORM, field='', localCsys=None, name='Load-1', region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-6'])
+mdb.models['Model-1'].loads['Load-1'].setValues(cf2=-1.0, distributionType=
+    UNIFORM, field='')
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-1', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-016', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '56 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'The aspect ratio for 80 elements exceeds 100 to 1. The elements have been identified in element set WarnElemAspectRatio.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '2 nodes have dof on which incorrect boundary conditions may have been specified. The nodes have been identified in node set WarnNodeBCIncorrectDof.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '2 nodes have dof on which incorrect boundary conditions may have been specified. The nodes have been identified in node set WarnNodeBCIncorrectDof.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-016', 'handle': 1916, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 178.0})
+mdb.jobs['Job-1']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MINIMUM_MEMORY, {'minimum_memory': 37.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 187.0})
+mdb.jobs['Job-1']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MINIMUM_MEMORY, {'minimum_memory': 38.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 2, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 3, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 4, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 5, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 6, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 0.0, 'attempts': 1, 
+    'timeIncrement': 1e-36, 'increment': 1, 'stepTime': 1e-36, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 0, 'phase': STANDARD_PHASE, 
+    'equilibrium': 0})
+mdb.jobs['Job-1']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Wed Apr 17 13:39:01 2024', 
+    'jobName': 'Job-1'})
+# Save by mpoli on 2024_04_17-13.44.29; build 2023 2022_09_28-20.11.55 183150

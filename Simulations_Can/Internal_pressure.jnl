@@ -1,0 +1,1526 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.openStep('C:/Users/mpoli/Desktop/Soda can 2 v7.step', scaleFromFile=OFF)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='Soda can 2 v7-1', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=2, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='Soda can 2 v7-2', 
+    type=DEFORMABLE_BODY)
+del mdb.models['Model-1'].parts['Soda can 2 v7-2']
+mdb.models['Model-1'].parts['Soda can 2 v7-1'].RemoveFaces(deleteCells=False, 
+    faceList=
+    mdb.models['Model-1'].parts['Soda can 2 v7-1'].faces.getSequenceFromMask(
+    mask=('[#800000 ]', ), ))
+mdb.models['Model-1'].parts['Soda can 2 v7-1'].RemoveFaces(deleteCells=False, 
+    faceList=
+    mdb.models['Model-1'].parts['Soda can 2 v7-1'].faces.getSequenceFromMask(
+    mask=('[#1000000 ]', ), ))
+mdb.models['Model-1'].parts['Soda can 2 v7-1'].RemoveFaces(deleteCells=False, 
+    faceList=
+    mdb.models['Model-1'].parts['Soda can 2 v7-1'].faces.getSequenceFromMask(
+    mask=('[#800000 #400 ]', ), ))
+mdb.models['Model-1'].parts['Soda can 2 v7-1'].RemoveFaces(deleteCells=False, 
+    faceList=
+    mdb.models['Model-1'].parts['Soda can 2 v7-1'].faces.getSequenceFromMask(
+    mask=('[#80000000 #4 ]', ), ))
+mdb.models['Model-1'].parts['Soda can 2 v7-1'].RemoveFaces(deleteCells=False, 
+    faceList=
+    mdb.models['Model-1'].parts['Soda can 2 v7-1'].faces.getSequenceFromMask(
+    mask=('[#40000000 ]', ), ))
+mdb.models['Model-1'].parts['Soda can 2 v7-1'].Mirror(keepOriginal=ON, 
+    mirrorPlane=mdb.models['Model-1'].parts['Soda can 2 v7-1'].faces[31])
+del mdb.models['Model-1'].parts['Soda can 2 v7-1']
+mdb.openStep('C:/Users/mpoli/Desktop/Last chance.step', scaleFromFile=OFF)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='Last chance-1', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=2, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='Last chance-2', type=
+    DEFORMABLE_BODY)
+del mdb.models['Model-1'].parts['Last chance-2']
+mdb.models['Model-1'].parts['Last chance-1'].Mirror(keepOriginal=ON, 
+    mirrorPlane=mdb.models['Model-1'].parts['Last chance-1'].faces[0])
+mdb.models['Model-1'].parts['Last chance-1'].RemoveCells(cellList=
+    mdb.models['Model-1'].parts['Last chance-1'].cells.getSequenceFromMask(
+    mask=('[#1 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=3.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].Material(name='Alu lati')
+mdb.models['Model-1'].materials['Alu lati'].Elastic(table=((69000.0, 0.34), ))
+mdb.models['Model-1'].Material(name='Alu sopra sotto')
+mdb.models['Model-1'].materials['Alu sopra sotto'].Elastic(table=((696000.0, 
+    0.33), ))
+mdb.models['Model-1'].HomogeneousShellSection(idealization=NO_IDEALIZATION, 
+    integrationRule=SIMPSON, material='Alu lati', name='Section-1', 
+    nodalThicknessField='', numIntPts=5, poissonDefinition=DEFAULT, 
+    preIntegrate=OFF, temperature=GRADIENT, thickness=0.22, thicknessField='', 
+    thicknessModulus=None, thicknessType=UNIFORM, useDensity=OFF)
+mdb.models['Model-1'].sections.changeKey(fromName='Section-1', toName=
+    'Section lati')
+mdb.models['Model-1'].HomogeneousShellSection(idealization=NO_IDEALIZATION, 
+    integrationRule=SIMPSON, material='Alu sopra sotto', name=
+    'Section sopra sotto', nodalThicknessField='', numIntPts=5, 
+    poissonDefinition=DEFAULT, preIntegrate=OFF, temperature=GRADIENT, 
+    thickness=0.22, thicknessField='', thicknessModulus=None, thicknessType=
+    UNIFORM, useDensity=OFF)
+mdb.models['Model-1'].parts['Last chance-1'].Set(faces=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#f3e7ffe7 #11ffffff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['Last chance-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Last chance-1'].sets['Set-1'], sectionName=
+    'Section sopra sotto', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['Last chance-1'].Set(faces=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#c180018 #e000000 ]', ), ), name='Set-2')
+mdb.models['Model-1'].parts['Last chance-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Last chance-1'].sets['Set-2'], sectionName=
+    'Section lati', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'Last chance-1-1', part=mdb.models['Model-1'].parts['Last chance-1'])
+mdb.models['Model-1'].StaticStep(name='Step-1', previous='Initial')
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].faces.getSequenceFromMask(
+    ('[#400000 ]', ), ), name='Set-1')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-1'], u1=0.0, 
+    u2=0.0, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Surface(name='Surf-1', side2Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].faces.getSequenceFromMask(
+    ('[#e1ffffff #19eb95ed ]', ), ))
+mdb.models['Model-1'].Pressure(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, field='', magnitude=0.2, name='Load-1', region=
+    mdb.models['Model-1'].rootAssembly.surfaces['Surf-1'])
+# Save by mpoli on 2024_05_11-18.24.07; build 2023 2022_09_28-20.11.55 183150
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-1', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '120 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'The aspect ratio for 100 elements exceeds 100 to 1. The elements have been identified in element set WarnElemAspectRatio.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '23 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 5672, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 90.0})
+mdb.jobs['Job-1']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MINIMUM_MEMORY, {'minimum_memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Sat May 11 18:25:08 2024', 
+    'jobName': 'Job-1'})
+del mdb.models['Model-1'].loads['Load-1']
+mdb.models['Model-1'].rootAssembly.Surface(name='Surf-2', side2Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].faces.getSequenceFromMask(
+    ('[#dd8001b #ec08000 ]', ), ))
+mdb.models['Model-1'].Pressure(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, field='', magnitude=0.2, name='Load-1', region=
+    mdb.models['Model-1'].rootAssembly.surfaces['Surf-2'])
+del mdb.models['Model-1'].boundaryConditions['BC-1']
+mdb.models['Model-1'].rootAssembly.Set(name='Set-2', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].vertices.getSequenceFromMask(
+    ('[#10 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-2'], u1=0.0, 
+    u2=0.0, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-3', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].vertices.getSequenceFromMask(
+    ('[#4 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-2', region=mdb.models['Model-1'].rootAssembly.sets['Set-3'], u1=0.0, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-4', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].vertices.getSequenceFromMask(
+    ('[#2 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'], u1=UNSET, 
+    u2=UNSET, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-2', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-2'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-2']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '120 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'The aspect ratio for 100 elements exceeds 100 to 1. The elements have been identified in element set WarnElemAspectRatio.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '23 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-2.odb', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 968, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-2', 'memory': 90.0})
+mdb.jobs['Job-2']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(MINIMUM_MEMORY, {'minimum_memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 1U', 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-2', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-2']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 2U', 
+    'timeIncrement': 0.25, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-2', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-2']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 3U', 
+    'timeIncrement': 0.0625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-2', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-2']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 4U', 
+    'timeIncrement': 0.015625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-2', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-2']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 5U', 
+    'timeIncrement': 0.00390625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-2', 'severe': 0, 'iterations': 4, 'phase': STANDARD_PHASE, 
+    'equilibrium': 4})
+mdb.jobs['Job-2']._Message(ERROR, {'phase': STANDARD_PHASE, 
+    'message': 'Too many attempts made for this increment', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ABORTED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ERROR, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-2'})
+mdb.models['Model-1'].boundaryConditions['BC-1'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-2'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-3'].suppress()
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].edges.getSequenceFromMask(
+    ('[#42 #0 #c ]', ), ), name='Set-5')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-5'], u1=0.0, 
+    u2=0.0, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.jobs['Job-2'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-2']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '120 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'The aspect ratio for 100 elements exceeds 100 to 1. The elements have been identified in element set WarnElemAspectRatio.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '23 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-2.odb', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 7884, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-2', 'memory': 90.0})
+mdb.jobs['Job-2']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(MINIMUM_MEMORY, {'minimum_memory': 24.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-2', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-2']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(JOB_COMPLETED, {'time': 'Sat May 11 18:33:12 2024', 
+    'jobName': 'Job-2'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-3', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-3'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-3']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '163 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'The aspect ratio for 78 elements exceeds 100 to 1. The elements have been identified in element set WarnElemAspectRatio.', 
+    'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-3.odb', 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 10620, 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-3', 'memory': 176.0})
+mdb.jobs['Job-3']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(MINIMUM_MEMORY, {'minimum_memory': 34.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-3', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-3']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-3'})
+mdb.jobs['Job-3']._Message(JOB_COMPLETED, {'time': 'Sat May 11 18:34:58 2024', 
+    'jobName': 'Job-3'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-4', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-4'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-4']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '778 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '313 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-4.odb', 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 11448, 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-4', 'memory': 659.0})
+mdb.jobs['Job-4']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(MINIMUM_MEMORY, {'minimum_memory': 109.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-4', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-4']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-4'})
+mdb.jobs['Job-4']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-4'})
+mdb.meshEditOptions.setValues(enableUndo=True, maxUndoCacheElements=0.5)
+mdb.jobs['Job-4']._Message(JOB_COMPLETED, {'time': 'Sat May 11 18:36:12 2024', 
+    'jobName': 'Job-4'})
+mdb.models['Model-1'].parts['Last chance-1'].Round(edgeList=(
+    mdb.models['Model-1'].parts['Last chance-1'].edges[6], ), radius=2.0)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-5', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+del mdb.models['Model-1'].boundaryConditions['BC-4']
+mdb.models['Model-1'].boundaryConditions['BC-1'].resume()
+del mdb.models['Model-1'].boundaryConditions['BC-1']
+del mdb.models['Model-1'].boundaryConditions['BC-2']
+del mdb.models['Model-1'].boundaryConditions['BC-3']
+mdb.models['Model-1'].rootAssembly.Set(name='Set-6', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].vertices.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-6'], u1=0.0, 
+    u2=0.0, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-7', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].vertices.getSequenceFromMask(
+    ('[#8 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-2', region=mdb.models['Model-1'].rootAssembly.sets['Set-7'], u1=0.0, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-8', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].vertices.getSequenceFromMask(
+    ('[#80 ]', ), ))
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-8'], u1=UNSET, 
+    u2=UNSET, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].parts['Last chance-1'].Set(faces=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#f ]', ), ), name='Set-3')
+mdb.models['Model-1'].parts['Last chance-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Last chance-1'].sets['Set-3'], sectionName=
+    'Section sopra sotto', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['Job-5'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-5']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '529 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '3 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-5.odb', 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 9128, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-5', 'memory': 614.0})
+mdb.jobs['Job-5']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(MINIMUM_MEMORY, {'minimum_memory': 101.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 1U', 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-5', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-5']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 2U', 
+    'timeIncrement': 0.25, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-5', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-5']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 3U', 
+    'timeIncrement': 0.0625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-5', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+# Save by mpoli on 2024_05_11-18.44.45; build 2023 2022_09_28-20.11.55 183150
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Job-5']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 4U', 
+    'timeIncrement': 0.015625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-5', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-5']._Message(STATUS, {'totalTime': 0.0, 'attempts': ' 5U', 
+    'timeIncrement': 0.00390625, 'increment': 1, 'stepTime': 0.0, 'step': 1, 
+    'jobName': 'Job-5', 'severe': 0, 'iterations': 5, 'phase': STANDARD_PHASE, 
+    'equilibrium': 5})
+mdb.jobs['Job-5']._Message(ERROR, {'phase': STANDARD_PHASE, 
+    'message': 'Too many attempts made for this increment', 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(ABORTED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(ERROR, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Standard Analysis exited with an error - Please see the  message file for possible error messages if the file exists.', 
+    'jobName': 'Job-5'})
+mdb.models['Model-1'].boundaryConditions['BC-1'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-2'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-3'].suppress()
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].edges.getSequenceFromMask(
+    ('[#948 ]', ), ), name='Set-9')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-9'], u1=0.0, 
+    u2=0.0, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.jobs['Job-5'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-5']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '529 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '3 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-5.odb', 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 12024, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-5', 'memory': 614.0})
+mdb.jobs['Job-5']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(MINIMUM_MEMORY, {'minimum_memory': 101.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-5', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-5']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-5'})
+mdb.jobs['Job-5']._Message(JOB_COMPLETED, {'time': 'Sat May 11 18:46:44 2024', 
+    'jobName': 'Job-5'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-6', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-6'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-6']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 0, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '155 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'The aspect ratio for 78 elements exceeds 100 to 1. The elements have been identified in element set WarnElemAspectRatio.', 
+    'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-6.odb', 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-004', 'handle': 8880, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-6', 'memory': 178.0})
+mdb.jobs['Job-6']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(MINIMUM_MEMORY, {'minimum_memory': 34.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-6', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-6']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(JOB_COMPLETED, {'time': 'Sat May 11 18:49:18 2024', 
+    'jobName': 'Job-6'})
+# Save by mpoli on 2024_05_11-18.50.13; build 2023 2022_09_28-20.11.55 183150
+# Save by mpoli on 2024_05_11-18.50.51; build 2023 2022_09_28-20.11.55 183150
+# Save by mpoli on 2024_05_11-18.57.03; build 2023 2022_09_28-20.11.55 183150
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+del mdb.jobs['Job-1']
+del mdb.jobs['Job-2']
+del mdb.jobs['Job-3']
+del mdb.jobs['Job-4']
+del mdb.jobs['Job-5']
+del mdb.jobs['Job-6']
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].setMeshControls(elemShape=TRI, 
+    regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#ffffffff:2 #1 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].setElementType(elemTypes=(
+    ElemType(elemCode=S8R, elemLibrary=STANDARD), ElemType(elemCode=STRI65, 
+    elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#ffffffff:2 #1 ]', ), ), ))
+mdb.models['Model-1'].parts['Last chance-1'].setMeshControls(elemShape=QUAD, 
+    regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#0 #80000000 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-1', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '3368 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 13252, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 624.0})
+mdb.jobs['Job-1']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MINIMUM_MEMORY, {'minimum_memory': 105.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Sun May 12 11:48:05 2024', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-2', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-2'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-2']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '8036 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-2.odb', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 7896, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-2', 'memory': 2290.0})
+mdb.jobs['Job-2']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(MINIMUM_MEMORY, {'minimum_memory': 367.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-2', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-2']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-2'})
+mdb.jobs['Job-2']._Message(JOB_COMPLETED, {'time': 'Sun May 12 11:50:28 2024', 
+    'jobName': 'Job-2'})
+mdb.jobs.changeKey(fromName='Job-1', toName='GlobalTwo')
+mdb.jobs.changeKey(fromName='Job-2', toName='GlobalOne')
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.5)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-3', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['GlobalOne'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalOne']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '5828 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalOne.odb', 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 10228, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalOne', 'memory': 1087.0})
+mdb.jobs['GlobalOne']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(MINIMUM_MEMORY, {'minimum_memory': 177.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'GlobalOne', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalOne']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 12 11:53:17 2024', 'jobName': 'GlobalOne'})
+mdb.jobs.changeKey(fromName='GlobalOne', toName='GlobalOnePointFive')
+del mdb.jobs['GlobalOnePointFive']
+del mdb.jobs['GlobalTwo']
+del mdb.jobs['Job-3']
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalOnePointFive', 
+    nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, numThreadsPerMpiProcess=
+    1, queue=None, resultsFormat=ODB, scratch='', type=ANALYSIS, 
+    userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['GlobalOnePointFive'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalOnePointFive']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 
+    'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '5828 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalOnePointFive.odb', 
+    'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 11876, 
+    'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalOnePointFive', 
+    'memory': 1087.0})
+mdb.jobs['GlobalOnePointFive']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 8192.0, 
+    'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 177.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 1, 'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'GlobalOnePointFive', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalOnePointFive']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalOnePointFive'})
+mdb.jobs['GlobalOnePointFive']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 12 11:55:35 2024', 'jobName': 'GlobalOnePointFive'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalOne', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['GlobalOne'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalOne']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '8036 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalOne.odb', 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 4000, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalOne', 'memory': 2314.0})
+mdb.jobs['GlobalOne']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(MINIMUM_MEMORY, {'minimum_memory': 367.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'GlobalOne', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalOne']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalOne'})
+mdb.jobs['GlobalOne']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 12 11:58:29 2024', 'jobName': 'GlobalOne'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalTwo', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['GlobalTwo'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalTwo']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '3368 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalTwo.odb', 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 1132, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalTwo', 'memory': 624.0})
+mdb.jobs['GlobalTwo']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(MINIMUM_MEMORY, {'minimum_memory': 105.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'GlobalTwo', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalTwo']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 12 12:05:09 2024', 'jobName': 'GlobalTwo'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#f6a ]', ), ), minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#0 #800 ]', ), ), minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#0 #280 #0 #3d0 #6 ]', ), ), minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.5)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#0:3 #200 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#0 #2f0 #0 #1d0 #6 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#0 #800 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#fff ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#1800007f ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#f6a ]', ), ), minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalTwoRaffinate', 
+    nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, numThreadsPerMpiProcess=
+    1, queue=None, resultsFormat=ODB, scratch='', type=ANALYSIS, 
+    userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['GlobalTwoRaffinate'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalTwoRaffinate']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 
+    'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '9060 elements are distorted. Either the isoparametric angles are out of the suggested limits or the triangular or tetrahedral quality measure is bad. The elements have been identified in element set WarnElemDistorted.', 
+    'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '10517 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalTwoRaffinate.odb', 
+    'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 10068, 
+    'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalTwoRaffinate', 
+    'memory': 6725.0})
+mdb.jobs['GlobalTwoRaffinate']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 8192.0, 
+    'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 961.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 1, 'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'GlobalTwoRaffinate', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalTwoRaffinate']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwoRaffinate'})
+mdb.jobs['GlobalTwoRaffinate']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 12 12:18:24 2024', 'jobName': 'GlobalTwoRaffinate'})
+mdb.models['Model-1'].materials['Alu sopra sotto'].Density(table=((2.65e-09, ), 
+    ))
+mdb.models['Model-1'].materials['Alu lati'].Density(table=((2.72e-09, ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#7e0001ff #c0000000 #1 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#2fffff #0 #8fe00 #0 #300000 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].rootAssembly.Surface(name='Surf-3', side1Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].faces.getSequenceFromMask(
+    ('[#1fffffff #9eb95ede #1 ]', ), ))
+mdb.models['Model-1'].Pressure(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, field='', magnitude=0.1, name='Load-2', region=
+    mdb.models['Model-1'].rootAssembly.surfaces['Surf-3'])
+mdb.models['Model-1'].loads['Load-1'].setValues(magnitude=0.3)
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='PIntExt', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['PIntExt'].submit(consistencyChecking=OFF)
+mdb.jobs['PIntExt']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 0, 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '3368 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\PIntExt.odb', 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-049', 'handle': 7388, 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'PIntExt', 'memory': 628.0})
+mdb.jobs['PIntExt']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(MINIMUM_MEMORY, {'minimum_memory': 106.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'PIntExt', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['PIntExt']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'PIntExt'})
+mdb.jobs['PIntExt']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 12 12:41:05 2024', 'jobName': 'PIntExt'})
+mdb.models['Model-1'].loads.changeKey(fromName='Load-2', toName='Pext')
+mdb.models['Model-1'].loads['Pext'].suppress()
+mdb.models['Model-1'].loads.changeKey(fromName='Load-1', toName='Pint')
+mdb.models['Model-1'].loads['Pint'].setValues(magnitude=0.2)
+# Save by mpoli on 2024_05_12-12.42.27; build 2023 2022_09_28-20.11.55 183150
+# Save by mpoli on 2024_05_12-13.10.45; build 2023 2022_09_28-20.11.55 183150
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].loads['Pint'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-4'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-4'].resume()
+mdb.models['Model-1'].loads['Pint'].resume()
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#f6a ]', ), ), minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+# Save by mpoli on 2024_05_12-15.15.38; build 2023 2022_09_28-20.11.55 183150
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+del mdb.jobs['GlobalOne']
+del mdb.jobs['GlobalOnePointFive']
+del mdb.jobs['GlobalTwo']
+del mdb.jobs['GlobalTwoRaffinate']
+del mdb.jobs['PIntExt']
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#ffffffff:2 #1 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#ffffffff:4 #3fffff ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=3.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].parts['Last chance-1'].setElementType(elemTypes=(
+    ElemType(elemCode=S8R, elemLibrary=STANDARD), ElemType(elemCode=STRI65, 
+    elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#2c0000f4 #80000000 ]', ), ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#0 #80000000 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].setMeshControls(elemShape=TRI, 
+    regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#40000b4 #80000000 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.meshEditOptions.setValues(enableUndo=True, maxUndoCacheElements=0.5)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-1', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-1'].submit(consistencyChecking=OFF)
+# Save by mpoli on 2024_05_26-11.46.59; build 2023 2022_09_28-20.11.55 183150
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Job-1']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '2131 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-1.odb', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 10040, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-1', 'memory': 267.0})
+mdb.jobs['Job-1']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(MINIMUM_MEMORY, {'minimum_memory': 50.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-1', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-1']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-1'})
+mdb.jobs['Job-1']._Message(JOB_COMPLETED, {'time': 'Sun May 26 11:47:12 2024', 
+    'jobName': 'Job-1'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs.changeKey(fromName='Job-1', toName='GlobalThree')
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalTwo', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['GlobalTwo'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalTwo']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 0, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '3368 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalTwo.odb', 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 4408, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalTwo', 'memory': 562.0})
+mdb.jobs['GlobalTwo']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(MINIMUM_MEMORY, {'minimum_memory': 101.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'GlobalTwo', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalTwo']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwo'})
+mdb.jobs['GlobalTwo']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 26 11:50:11 2024', 'jobName': 'GlobalTwo'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#fff ]', ), ), minSizeFactor=0.1, size=1.5)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalTwoLocalOneFive', 
+    nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, numThreadsPerMpiProcess=
+    1, queue=None, resultsFormat=ODB, scratch='', type=ANALYSIS, 
+    userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['GlobalTwoLocalOneFive'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalTwoLocalOneFive']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 0, 
+    'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '4091 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalTwoLocalOneFive.odb', 
+    'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 7088, 
+    'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalTwoLocalOneFive', 
+    'memory': 813.0})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 8192.0, 
+    'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 142.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 1, 'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'GlobalTwoLocalOneFive', 'severe': 0, 
+    'iterations': 2, 'phase': STANDARD_PHASE, 'equilibrium': 2})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwoLocalOneFive'})
+mdb.jobs['GlobalTwoLocalOneFive']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 26 12:04:08 2024', 'jobName': 'GlobalTwoLocalOneFive'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#fff ]', ), ), minSizeFactor=0.1, size=1.25)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalTwoLocalOneTwoFive', 
+    nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, numThreadsPerMpiProcess=
+    1, queue=None, resultsFormat=ODB, scratch='', type=ANALYSIS, 
+    userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['GlobalTwoLocalOneTwoFive'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'STI-WIN10-072', 'handle': 0, 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(WARNING, {
+    'phase': BATCHPRE_PHASE, 
+    'message': '4718 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 'file': 'C:\\temp\\GlobalTwoLocalOneTwoFive.odb', 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'STI-WIN10-072', 'handle': 7304, 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalTwoLocalOneTwoFive', 
+    'memory': 1040.0})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 8192.0, 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 177.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'GlobalTwoLocalOneTwoFive', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.jobs['GlobalTwoLocalOneTwoFive']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 26 12:16:46 2024', 'jobName': 'GlobalTwoLocalOneTwoFive'})
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh()
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#fff ]', ), ), minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='GlobalTwoLocalOne', 
+    nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, numThreadsPerMpiProcess=
+    1, queue=None, resultsFormat=ODB, scratch='', type=ANALYSIS, 
+    userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['GlobalTwoLocalOne'].submit(consistencyChecking=OFF)
+mdb.jobs['GlobalTwoLocalOne']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 0, 
+    'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '5647 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\GlobalTwoLocalOne.odb', 'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-072', 'handle': 1684, 
+    'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 0, 'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'GlobalTwoLocalOne', 'memory': 1356.0})
+mdb.jobs['GlobalTwoLocalOne']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 8192.0, 
+    'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 228.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 
+    'step': 0, 'frame': 1, 'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'GlobalTwoLocalOne', 'severe': 0, 'iterations': 1, 
+    'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['GlobalTwoLocalOne']._Message(END_STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'GlobalTwoLocalOne'})
+mdb.jobs['GlobalTwoLocalOne']._Message(JOB_COMPLETED, {
+    'time': 'Sun May 26 12:26:12 2024', 'jobName': 'GlobalTwoLocalOne'})
+# Save by mpoli on 2024_05_26-12.28.29; build 2023 2022_09_28-20.11.55 183150
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].parts['Last chance-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].faces.getSequenceFromMask((
+    '[#ffffffff:2 #1 ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#ffffffff:4 #3fffff ]', ), ))
+mdb.models['Model-1'].parts['Last chance-1'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['Last chance-1'].edges.getSequenceFromMask((
+    '[#fff ]', ), ), minSizeFactor=0.1, size=1.5)
+mdb.models['Model-1'].parts['Last chance-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].loads['Pint'].suppress()
+mdb.models['Model-1'].rootAssembly.Surface(name='Surf-4', side2Faces=
+    mdb.models['Model-1'].rootAssembly.instances['Last chance-1-1'].faces.getSequenceFromMask(
+    ('[#ffffffff:2 #1 ]', ), ))
+mdb.models['Model-1'].Pressure(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, field='', magnitude=0.2, name='Load-3', region=
+    mdb.models['Model-1'].rootAssembly.surfaces['Surf-4'])
+mdb.models['Model-1'].sections['Section sopra sotto'].setValues(idealization=
+    NO_IDEALIZATION, integrationRule=SIMPSON, material='Alu sopra sotto', 
+    nodalThicknessField='', numIntPts=5, preIntegrate=OFF, thickness=0.28, 
+    thicknessField='', thicknessType=UNIFORM)
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-6', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numGPUs=0, numThreadsPerMpiProcess=1, queue=None, resultsFormat=
+    ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, 
+    waitMinutes=0)
+mdb.jobs['Job-6'].submit(consistencyChecking=OFF)
+mdb.jobs['Job-6']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'STI-WIN10-010', 'handle': 0, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': '4091 elements are curved/warped. The angle subtended between the average element normal and a nodal normal exceeds 10 degrees. Mesh refinement is recommended. The elements have been identified in element set WarnElemWarped.', 
+    'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Job-6.odb', 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(STARTED, {'phase': STANDARD_PHASE, 
+    'clientHost': 'STI-WIN10-010', 'handle': 7368, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 0, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(MEMORY_ESTIMATE, {'phase': STANDARD_PHASE, 
+    'jobName': 'Job-6', 'memory': 813.0})
+mdb.jobs['Job-6']._Message(PHYSICAL_MEMORY, {'phase': STANDARD_PHASE, 
+    'physical_memory': 8192.0, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(MINIMUM_MEMORY, {'minimum_memory': 142.0, 
+    'phase': STANDARD_PHASE, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(ODB_FRAME, {'phase': STANDARD_PHASE, 'step': 0, 
+    'frame': 1, 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(STATUS, {'totalTime': 1.0, 'attempts': 1, 
+    'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'Job-6', 'severe': 0, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'equilibrium': 1})
+mdb.jobs['Job-6']._Message(END_STEP, {'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(COMPLETED, {'phase': STANDARD_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Job-6'})
+mdb.jobs['Job-6']._Message(JOB_COMPLETED, {'time': 'Thu May 30 12:39:28 2024', 
+    'jobName': 'Job-6'})
+# Save by mpoli on 2024_05_30-12.40.09; build 2023 2022_09_28-20.11.55 183150
